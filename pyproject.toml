@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hlaharm"
+version = "0.0.1"
+description = "Harmonize and validate HLA typing output across multiple typers"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Leon Botzenhardt" }]
+keywords = ["HLA", "immunogenomics", "IPD-IMGT/HLA", "typing", "nomenclature", "bioinformatics"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+# No runtime dependencies: the shipped nomenclature core is in-house and stdlib-only
+# (py-ard is a test-only oracle, never imported at runtime — see PLAN.md §6).
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/leonbzt/hlaharm"
+Repository = "https://github.com/leonbzt/hlaharm"
+Issues = "https://github.com/leonbzt/hlaharm/issues"
+
+[project.optional-dependencies]
+# Test-only oracle. py-ard is LGPL-3.0; it is used to cross-check the in-house
+# reducer in CI and is deliberately NOT a runtime dependency of the shipped tool.
+oracle = ["py-ard"]
+dev = ["pytest>=7.0", "ruff>=0.5"]
+
+[project.scripts]
+hlaharm = "hlaharm.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hlaharm"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+target-version = "py310"
+
+[tool.ruff.lint]
+# pycodestyle, pyflakes, isort, bugbear, comprehensions, pyupgrade, simplify.
+select = ["E", "F", "I", "B", "C4", "UP", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]  # asserts are the point in tests

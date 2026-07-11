@@ -1,0 +1,5 @@
+# file: Allelelist_history.txt
+# version: IPD-IMGT/HLA 3.55.0
+HLA_ID,3550,3400
+HLA00005,A*02:01:01:01,A*02:01:01
+HLA00700,A*66:01:01:01,A*66:01N

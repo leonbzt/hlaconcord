@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Test / tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Reference DB caches (large; fetched, not committed)
+/data/imgt/
+*.sqlite3
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store

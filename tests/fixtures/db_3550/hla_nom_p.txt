@@ -1,0 +1,7 @@
+# file: hla_nom_p.txt
+# version: IPD-IMGT/HLA 3.55.0
+# Locus;Alleles(slash-separated);P-group
+A*;01:01:01:01;01:01P
+A*;02:01:01:01/02:01:01:02L/02:01:01:03;02:01P
+B*;07:02:01:01/07:02:01:02;07:02P
+DRB1*;15:01:01:01/15:01:01:02;15:01P
