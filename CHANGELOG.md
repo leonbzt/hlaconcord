@@ -6,6 +6,10 @@ versioning once it reaches 1.0.
 
 ## [Unreleased]
 
+## [0.1.0] — 2026-07-15
+
+First tagged release. Package `hlaconcord`, CLI command `hlacc`.
+
 ### Added
 - **CLI (`hlacc`)** — `run`, `validate`, `normalize`, and `db` subcommands
   (M4). `run` ingests `--inputs tool:path …` or a `--samplesheet`, harmonizes

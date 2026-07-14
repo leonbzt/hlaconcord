@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "hlaconcord"
-version = "0.0.1"
+dynamic = ["version"]
 description = "Harmonize and validate HLA typing output across multiple typers"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -41,6 +41,10 @@ dev = ["pytest>=7.0", "ruff==0.15.21"]
 
 [project.scripts]
 hlacc = "hlaconcord.cli:main"
+
+[tool.hatch.version]
+# Single source of truth: __version__ in the package.
+path = "src/hlaconcord/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/hlaconcord"]

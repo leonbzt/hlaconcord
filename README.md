@@ -1,5 +1,10 @@
 # hlaconcord
 
+[![CI](https://github.com/leonbzt/hlaconcord/actions/workflows/ci.yml/badge.svg)](https://github.com/leonbzt/hlaconcord/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/hlaconcord.svg)](https://pypi.org/project/hlaconcord/)
+[![Python](https://img.shields.io/pypi/pyversions/hlaconcord.svg)](https://pypi.org/project/hlaconcord/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Harmonize and validate HLA typing output across multiple typers.
 
 Ingest the raw output of N HLA typers (OptiType, arcasHLA, HLA-LA, HLA-HD, …),
