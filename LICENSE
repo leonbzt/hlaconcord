@@ -22,7 +22,7 @@ SOFTWARE.
 
 ---
 
-hlaharm reads and (via `hlaharm db update`) fetches reference data from the
+hlaconcord reads and (via `hlacc db update`) fetches reference data from the
 IPD-IMGT/HLA database (ANHIG/IMGTHLA), which carries its own terms and citation
 requirements. That data is neither bundled with nor covered by this license; see
 https://www.ebi.ac.uk/ipd/imgt/hla/ for its licensing and how to cite it.

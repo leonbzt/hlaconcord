@@ -1,4 +1,4 @@
-# hlaharm — HLA typing output harmonizer + validator
+# hlaconcord — HLA typing output harmonizer + validator
 
 **Status:** planning draft · **Date:** 2026-07-02
 
@@ -136,7 +136,7 @@ Each stage is independently testable. Parsing is deliberately separated from
 normalization so a new typer only adds an adapter, not core logic.
 
 The nomenclature logic in stages [2]–[3] (parse, reduce, validate, accession-resolve)
-lives behind a single **`hlaharm.nomenclature` facade** (§6). Every other module calls that
+lives behind a single **`hlaconcord.nomenclature` facade** (§6). Every other module calls that
 interface and never a third-party library directly, so the reducer implementation can be
 swapped (in-house ↔ py-ard) in one file without touching the parsers or the concordance
 engine.
@@ -204,7 +204,7 @@ both the in-house reducer and `pyard` and asserts agreement at the reductions we
 Everything sits behind one facade (§3, §4):
 
 ```
-hlaharm.nomenclature.Nomenclature        # the interface every other module calls
+hlaconcord.nomenclature.Nomenclature        # the interface every other module calls
 ├── InHouseNomenclature   (default, shipped)
 └── PyArdNomenclature     (optional; behind the same interface, for fallback/benchmark)
 ```
@@ -237,7 +237,7 @@ If the M0 spike (§12) surfaces edge cases the in-house reducer gets wrong, adop
   (`A*02:01`, `A*02:01:01`, `A*02:01:01G` → `A*02:01`); the in-house reducer matches py-ard
   ≥99.4% across 2-/3-field/G inputs. `g` stays available as a **stricter ARD lens** for when
   all calls resolve to ≥3 fields. Internal comparison key = the chosen basis; human-facing
-  report = 2-field. (`DEFAULT_BASIS` in `hlaharm.nomenclature`.)
+  report = 2-field. (`DEFAULT_BASIS` in `hlaconcord.nomenclature`.)
 - Reduce every call to that comparison basis, after version reconciliation (§2.4).
 - Per locus, compare genotypes as **unordered multisets** (allele-1/allele-2 ordering is
   arbitrary; handle homozygous correctly).
@@ -267,7 +267,7 @@ If the M0 spike (§12) surfaces edge cases the in-house reducer gets wrong, adop
 ## 9. Reference database management
 
 - Bundle one pinned IPD-IMGT/HLA release for reproducible, citable output.
-- `hlaharm db list | update | pin <version>` to fetch newer releases into a local cache.
+- `hlacc db list | update | pin <version>` to fetch newer releases into a local cache.
 - Always record the DB version used in every output row and report header.
 - Only fetch the small name/group files (`Allelelist*`, `hla_nom_g/p`), not sequences.
 
@@ -276,18 +276,18 @@ If the M0 spike (§12) surfaces edge cases the in-house reducer gets wrong, adop
 ## 10. CLI (surface sketch)
 
 ```
-hlaharm run \
+hlacc run \
   --inputs optitype:S1.tsv arcashla:S1.json hla-la:S1_bestguess_G.txt hla-hd:S1_final.result.txt \
   --sample S1 --resolution 2 --db 3.55.0 -o out/
 
-hlaharm run --samplesheet samples.csv -o out/     # batch: sample,tool,path[,db_version]
-hlaharm validate  HLA-A*02:01  A*99:99            # quick name check
-hlaharm normalize A*0201                          # show canonical form + accession
-hlaharm db list|update|pin
+hlacc run --samplesheet samples.csv -o out/     # batch: sample,tool,path[,db_version]
+hlacc validate  HLA-A*02:01  A*99:99            # quick name check
+hlacc normalize A*0201                          # show canonical form + accession
+hlacc db list|update|pin
 ```
 
-Backed by an importable package (`hlaharm.parse`, `hlaharm.nomenclature`,
-`hlaharm.validate`, `hlaharm.concordance`) for pipeline integration.
+Backed by an importable package (`hlaconcord.parse`, `hlaconcord.nomenclature`,
+`hlaconcord.validate`, `hlaconcord.concordance`) for pipeline integration.
 
 ## 11. Outputs
 
@@ -341,21 +341,21 @@ Backed by an importable package (`hlaharm.parse`, `hlaharm.nomenclature`,
   dir for the generic `R1_` filename) + HLA-HD (`_final.result.txt`, `HLA-` prefix, `-`/`Not
   typed` dropped). Verified all four tools harmonize on real 3.55.0 data: 2-field, 3-field,
   G-group, and prefixed calls reduce to one lgx key per allele and concord across loci.
-- **M4 — CLI + reference-DB management. ✓ DONE.** `hlaharm` CLI (`hlaharm.cli:main`)
+- **M4 — CLI + reference-DB management. ✓ DONE.** `hlacc` CLI (`hlaconcord.cli:main`)
   with `run` / `validate` / `normalize` / `db`. `run` ingests `--inputs tool:path …` or a
   `--samplesheet` (sample,tool,path[,db_version]), harmonizes, and writes the tidy table,
   concordance TSV, sample-grouped JSON, and (with `--gl`) consensus GL strings; exit code
-  `1` on any discordance, `2` on a config/DB error. Importable `hlaharm.pipeline.run`
-  behind it. Reference-DB layer (`hlaharm.db`): on-demand fetch of a release's small
+  `1` on any discordance, `2` on a config/DB error. Importable `hlaconcord.pipeline.run`
+  behind it. Reference-DB layer (`hlaconcord.db`): on-demand fetch of a release's small
   name/group files from ANHIG/IMGTHLA into a local cache (`db update`), discovery + pinning
-  (`db list|pin|path`), version↔IPD-branch conversion. GL-String export (`hlaharm.gl`) from
+  (`db list|pin|path`), version↔IPD-branch conversion. GL-String export (`hlaconcord.gl`) from
   the consensus. Verified end-to-end on real 3.55.0 data; ~49 new tests.
 - **M5 — hardening. ✓ DONE.** Packaging metadata (classifiers, URLs, entry point) + `ruff`
   lint config (clean); MIT `LICENSE` (with an IPD-IMGT/HLA data-terms notice) and
   `CHANGELOG.md`; expanded `README.md` (install / quickstart / CLI / outputs / library);
   an `examples/` validation set (four-typer sample + expected output); GitHub Actions CI —
   a fast matrix (py3.10–3.12: ruff + the 113-test suite) plus a py-ard **oracle gate** job
-  that bootstraps its reference data with `hlaharm db update` and runs the M0 cross-check.
+  that bootstraps its reference data with `hlacc db update` and runs the M0 cross-check.
 
 ---
 
@@ -403,8 +403,8 @@ Lower churn than a vendor-format chaser. Clinical relevance → citations and st
 
 **Resolved since:**
 5. Licensing / distribution of the IPD-IMGT/HLA data. **Sidestepped for now by not
-   redistributing it:** hlaharm fetches a release's small name/group files on demand
-   (`hlaharm db update`) into a per-user cache and records the version in every output,
+   redistributing it:** hlaconcord fetches a release's small name/group files on demand
+   (`hlacc db update`) into a per-user cache and records the version in every output,
    rather than bundling the database. `LICENSE` carries an IPD-IMGT/HLA data-terms/citation
    notice. If we later choose to bundle a pinned release for turnkey/offline use, the
    attribution/citation terms must be revisited then. (§9 "bundle a release" is thus

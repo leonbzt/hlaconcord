@@ -1,15 +1,15 @@
 from pathlib import Path
 
-from hlaharm import parsers
-from hlaharm.concordance import (
+from hlaconcord import parsers
+from hlaconcord.concordance import (
     ConcordanceFlag,
     ConcordanceStatus,
     ConsensusRule,
     concordance,
 )
-from hlaharm.model import AlleleCall, GenotypeCall
-from hlaharm.nomenclature import ReductionBasis
-from hlaharm.normalize import normalize
+from hlaconcord.model import AlleleCall, GenotypeCall
+from hlaconcord.nomenclature import ReductionBasis
+from hlaconcord.normalize import normalize
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

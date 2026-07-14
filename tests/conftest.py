@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from hlaharm.nomenclature import InHouseNomenclature, ReferenceData
+from hlaconcord.nomenclature import InHouseNomenclature, ReferenceData
 
 FIXTURES = Path(__file__).parent / "fixtures"
 FIXTURE_DB = FIXTURES / "db_3550"
@@ -28,7 +28,7 @@ def nom(reference: ReferenceData) -> InHouseNomenclature:
 @pytest.fixture()
 def data_root(tmp_path: Path) -> Path:
     """A cache root laid out like a real install, with the fixture DB as 3.55.0."""
-    root = tmp_path / "hlaharm-data"
+    root = tmp_path / "hlaconcord-data"
     release = root / "3.55.0"
     release.mkdir(parents=True)
     for name in _RELEASE_FILES:

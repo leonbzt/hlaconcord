@@ -19,8 +19,8 @@ because py-ard is not a pure ground truth:
 Skipped unless both py-ard and a release are available::
 
     pip install -e ".[oracle]"
-    export HLAHARM_IMGT_DIR=/path/to/IMGTHLA/release   # Allelelist.txt, hla_nom_g.txt, ...
-    export HLAHARM_IMGT_VERSION=3550                    # py-ard version string
+    export HLACONCORD_IMGT_DIR=/path/to/IMGTHLA/release   # Allelelist.txt, hla_nom_g.txt, ...
+    export HLACONCORD_IMGT_VERSION=3550                    # py-ard version string
     pytest tests/test_oracle.py -s
 """
 
@@ -31,7 +31,7 @@ import random
 
 import pytest
 
-from hlaharm.nomenclature import (
+from hlaconcord.nomenclature import (
     InHouseNomenclature,
     ReductionBasis,
     ReferenceData,
@@ -40,15 +40,15 @@ from hlaharm.nomenclature import (
 
 pyard = pytest.importorskip("pyard", reason="oracle extra not installed")
 
-IMGT_DIR = os.environ.get("HLAHARM_IMGT_DIR")
-IMGT_VERSION = os.environ.get("HLAHARM_IMGT_VERSION")
+IMGT_DIR = os.environ.get("HLACONCORD_IMGT_DIR")
+IMGT_VERSION = os.environ.get("HLACONCORD_IMGT_VERSION")
 
 pytestmark = pytest.mark.skipif(
     not (IMGT_DIR and IMGT_VERSION),
-    reason="set HLAHARM_IMGT_DIR and HLAHARM_IMGT_VERSION to run the oracle gate",
+    reason="set HLACONCORD_IMGT_DIR and HLACONCORD_IMGT_VERSION to run the oracle gate",
 )
 
-SAMPLE_SIZE = int(os.environ.get("HLAHARM_ORACLE_SAMPLE", "5000"))
+SAMPLE_SIZE = int(os.environ.get("HLACONCORD_ORACLE_SAMPLE", "5000"))
 MVP_LOCI = ("A*", "B*", "C*", "DRB1*", "DQB1*")
 
 # G-group name pairs (in-house == IMGT wmda file, py-ard == its relabel) that share

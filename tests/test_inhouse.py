@@ -1,4 +1,4 @@
-from hlaharm.nomenclature import ReductionBasis, ValidationStatus
+from hlaconcord.nomenclature import ReductionBasis, ValidationStatus
 
 # -- reference loading --------------------------------------------------------
 

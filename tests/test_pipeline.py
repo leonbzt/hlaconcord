@@ -2,9 +2,9 @@ from pathlib import Path
 
 import pytest
 
-from hlaharm.concordance import ConcordanceStatus, ConsensusRule
-from hlaharm.nomenclature import ReductionBasis
-from hlaharm.pipeline import InputSpec, run
+from hlaconcord.concordance import ConcordanceStatus, ConsensusRule
+from hlaconcord.nomenclature import ReductionBasis
+from hlaconcord.pipeline import InputSpec, run
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

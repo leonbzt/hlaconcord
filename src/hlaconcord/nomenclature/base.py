@@ -1,8 +1,8 @@
 """The nomenclature facade.
 
-Every other module in hlaharm talks to HLA nomenclature *only* through this
+Every other module in hlaconcord talks to HLA nomenclature *only* through this
 interface, never a third-party library directly. That makes the reducer
-implementation swappable in one place: :class:`~hlaharm.nomenclature.inhouse.InHouseNomenclature`
+implementation swappable in one place: :class:`~hlaconcord.nomenclature.inhouse.InHouseNomenclature`
 ships by default; a ``PyArdNomenclature`` backed by py-ard can be dropped in
 behind the same interface for benchmarking or as a runtime fallback (see PLAN.md
 §6). No caller needs to change.

@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from hlaharm import parsers
-from hlaharm.parsers import arcashla, optitype
+from hlaconcord import parsers
+from hlaconcord.parsers import arcashla, optitype
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

@@ -1,6 +1,6 @@
 import pytest
 
-from hlaharm.nomenclature import ParseError, Resolution, parse_allele
+from hlaconcord.nomenclature import ParseError, Resolution, parse_allele
 
 
 def test_two_field_with_and_without_prefix():

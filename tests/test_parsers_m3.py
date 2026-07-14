@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from hlaharm import parsers
-from hlaharm.parsers import hla_hd, hla_la
+from hlaconcord import parsers
+from hlaconcord.parsers import hla_hd, hla_la
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "hlaharm"
+name = "hlaconcord"
 version = "0.0.1"
 description = "Harmonize and validate HLA typing output across multiple typers"
 readme = "README.md"
@@ -27,21 +27,23 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/leonbzt/hlaharm"
-Repository = "https://github.com/leonbzt/hlaharm"
-Issues = "https://github.com/leonbzt/hlaharm/issues"
+Homepage = "https://github.com/leonbzt/hlaconcord"
+Repository = "https://github.com/leonbzt/hlaconcord"
+Issues = "https://github.com/leonbzt/hlaconcord/issues"
 
 [project.optional-dependencies]
 # Test-only oracle. py-ard is LGPL-3.0; it is used to cross-check the in-house
 # reducer in CI and is deliberately NOT a runtime dependency of the shipped tool.
 oracle = ["py-ard"]
-dev = ["pytest>=7.0", "ruff>=0.5"]
+# ruff is pinned exactly: its lint rules evolve between releases, so an unpinned
+# range lets CI drift from local and fail on rules you never ran against.
+dev = ["pytest>=7.0", "ruff==0.15.21"]
 
 [project.scripts]
-hlaharm = "hlaharm.cli:main"
+hlacc = "hlaconcord.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/hlaharm"]
+packages = ["src/hlaconcord"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

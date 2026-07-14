@@ -1,6 +1,6 @@
 """Reference-database management (PLAN.md §9).
 
-hlaharm validates and reduces against a pinned IPD-IMGT/HLA release. Rather than
+hlaconcord validates and reduces against a pinned IPD-IMGT/HLA release. Rather than
 redistribute the database (licensing is deferred, PLAN.md §15.5), releases are
 fetched on demand into a local cache and every output records the version used.
 
@@ -13,8 +13,8 @@ Layout of the cache root::
         hla_nom_g.txt
         hla_nom_p.txt
 
-The root defaults to ``$HLAHARM_DATA_DIR`` then ``$XDG_DATA_HOME/hlaharm`` then
-``~/.local/share/hlaharm``. A release directory named in either version form
+The root defaults to ``$HLACONCORD_DATA_DIR`` then ``$XDG_DATA_HOME/hlaconcord`` then
+``~/.local/share/hlaconcord``. A release directory named in either version form
 (``3.55.0``) or IPD branch form (``3550``) is recognised, so a directory prepared
 by hand or by ``git clone`` of ANHIG/IMGTHLA works without renaming.
 """
@@ -81,12 +81,12 @@ def version_of(name: str) -> str:
 # -- cache root & config ------------------------------------------------------
 
 def default_root() -> Path:
-    env = os.environ.get("HLAHARM_DATA_DIR")
+    env = os.environ.get("HLACONCORD_DATA_DIR")
     if env:
         return Path(env).expanduser()
     xdg = os.environ.get("XDG_DATA_HOME")
     base = Path(xdg).expanduser() if xdg else Path.home() / ".local" / "share"
-    return base / "hlaharm"
+    return base / "hlaconcord"
 
 
 def _config_path(root: Path) -> Path:
@@ -117,7 +117,7 @@ def pin(root: Path, version: str) -> str:
     if find_release(root, version) is None:
         raise DatabaseError(
             f"cannot pin {version!r}: not installed in {root}. "
-            f"Run `hlaharm db update {version}` first."
+            f"Run `hlacc db update {version}` first."
         )
     config = read_config(root)
     config["pinned"] = version_of(version)
@@ -160,7 +160,7 @@ def resolve_version(root: Path, requested: str | None) -> str:
             raise DatabaseError(
                 f"release {requested!r} is not installed in {root}. "
                 f"Available: {', '.join(installed) or 'none'}. "
-                f"Run `hlaharm db update {requested}`."
+                f"Run `hlacc db update {requested}`."
             )
         return version_of(requested)
     pinned = pinned_version(root)
@@ -171,11 +171,11 @@ def resolve_version(root: Path, requested: str | None) -> str:
     if not installed:
         raise DatabaseError(
             f"no IPD-IMGT/HLA release installed in {root}. "
-            "Run `hlaharm db update <version>` (e.g. 3.55.0) to fetch one."
+            "Run `hlacc db update <version>` (e.g. 3.55.0) to fetch one."
         )
     raise DatabaseError(
         f"multiple releases installed ({', '.join(installed)}) and none pinned. "
-        "Pass --db <version> or run `hlaharm db pin <version>`."
+        "Pass --db <version> or run `hlacc db pin <version>`."
     )
 
 

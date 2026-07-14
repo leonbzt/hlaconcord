@@ -1,7 +1,7 @@
 # Example: harmonizing one sample across four typers
 
 `s1/` holds the raw output of the four MVP typers for a single sample, each in
-its own format and resolution — the exact heterogeneity hlaharm exists to absorb:
+its own format and resolution — the exact heterogeneity hlaconcord exists to absorb:
 
 | File | Tool | Resolution emitted |
 |---|---|---|
@@ -15,13 +15,13 @@ its own format and resolution — the exact heterogeneity hlaharm exists to abso
 First install a reference release (fetched into a local cache, not bundled):
 
 ```bash
-hlaharm db update 3.55.0
+hlacc db update 3.55.0
 ```
 
 Then harmonize the four outputs:
 
 ```bash
-hlaharm run \
+hlacc run \
   --inputs optitype:s1/s1_result.tsv \
            arcasHLA:s1/s1.genotype.json \
            hla-la:s1/s1_bestguess_G.txt \

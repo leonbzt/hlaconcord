@@ -3,7 +3,7 @@
 The importable entry point behind the CLI. Given a set of ``(tool, path)`` inputs
 and a nomenclature backend, it runs the whole pipeline and returns both the
 enriched calls (for the tidy table) and the per-locus concordance (for the report),
-so callers integrating hlaharm into a larger workflow never have to touch the CLI.
+so callers integrating hlaconcord into a larger workflow never have to touch the CLI.
 """
 
 from __future__ import annotations

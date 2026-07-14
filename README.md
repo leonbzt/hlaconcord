@@ -1,4 +1,4 @@
-# hlaharm
+# hlaconcord
 
 Harmonize and validate HLA typing output across multiple typers.
 
@@ -9,7 +9,7 @@ table plus a concordance/consensus view showing where the tools agree and disagr
 
 The field's own best practice is to run several typers and cross-check them; today
 that means renaming alleles by hand and building concordance tables in a spreadsheet.
-hlaharm makes that workflow reproducible — and does the one thing the manual version
+hlaconcord makes that workflow reproducible — and does the one thing the manual version
 gets wrong, reconciling **cross-database-version** name skew via stable accession ids
 so a version difference never masquerades as a real disagreement.
 
@@ -32,13 +32,13 @@ The IPD-IMGT/HLA reference database is **fetched, not bundled** (only the small
 name/group files, never the sequences). Install a release before your first run:
 
 ```bash
-hlaharm db update 3.55.0         # into a local cache (XDG data dir by default)
+hlacc db update 3.55.0         # into a local cache (XDG data dir by default)
 ```
 
 ## Quickstart
 
 ```bash
-hlaharm run \
+hlacc run \
   --inputs optitype:examples/s1/s1_result.tsv \
            arcasHLA:examples/s1/s1.genotype.json \
            hla-la:examples/s1/s1_bestguess_G.txt \
@@ -61,14 +61,14 @@ See [`examples/`](examples/) for the full walkthrough.
 ## CLI
 
 ```bash
-hlaharm run --inputs TOOL:PATH ... [--sample S] [--compare lgx|g|p|2field]
+hlacc run --inputs TOOL:PATH ... [--sample S] [--compare lgx|g|p|2field]
             [--consensus majority|unanimous] [--db VER] [--gl] [-o DIR]
-hlaharm run --samplesheet samples.csv -o out/   # batch: sample,tool,path[,db_version]
+hlacc run --samplesheet samples.csv -o out/   # batch: sample,tool,path[,db_version]
 
-hlaharm validate  HLA-A*02:01 A*99:99            # classify names against a release
-hlaharm normalize A*0201 A*29:112N              # canonical form + accession + reduction
+hlacc validate  HLA-A*02:01 A*99:99            # classify names against a release
+hlacc normalize A*0201 A*29:112N              # canonical form + accession + reduction
 
-hlaharm db list | update <ver> | pin <ver> | path
+hlacc db list | update <ver> | pin <ver> | path
 ```
 
 `run` exits `0` when every locus concords, `1` if any locus is discordant, and `2` on
@@ -97,9 +97,9 @@ With `-o DIR`, `run` writes:
 The CLI is a thin layer over an importable pipeline:
 
 ```python
-from hlaharm import db
-from hlaharm.nomenclature import InHouseNomenclature
-from hlaharm.pipeline import InputSpec, run
+from hlaconcord import db
+from hlaconcord.nomenclature import InHouseNomenclature
+from hlaconcord.pipeline import InputSpec, run
 
 root = db.default_root()
 nom = InHouseNomenclature(db.load_reference(root, "3.55.0"))
@@ -113,14 +113,14 @@ for locus in result.concordance:
 
 Package layout:
 
-- `hlaharm.nomenclature` — allele model + parser, the `Nomenclature` facade, the
+- `hlaconcord.nomenclature` — allele model + parser, the `Nomenclature` facade, the
   in-house reducer/validator (`InHouseNomenclature`), and the reference loaders.
-- `hlaharm.parsers` — OptiType, arcasHLA, HLA-LA, HLA-HD adapters behind a registry.
-- `hlaharm.normalize` / `hlaharm.tidy` — enrich calls through the facade; tidy table.
-- `hlaharm.concordance` / `hlaharm.report` / `hlaharm.gl` — per sample×locus
+- `hlaconcord.parsers` — OptiType, arcasHLA, HLA-LA, HLA-HD adapters behind a registry.
+- `hlaconcord.normalize` / `hlaconcord.tidy` — enrich calls through the facade; tidy table.
+- `hlaconcord.concordance` / `hlaconcord.report` / `hlaconcord.gl` — per sample×locus
   concordance and consensus, TSV/JSON/human reports, and GL-String export.
-- `hlaharm.db` — reference-release cache management.
-- `hlaharm.pipeline` / `hlaharm.cli` — orchestration and the command-line surface.
+- `hlaconcord.db` — reference-release cache management.
+- `hlaconcord.pipeline` / `hlaconcord.cli` — orchestration and the command-line surface.
 
 ## Nomenclature design note
 
@@ -135,5 +135,5 @@ allow-listed). See [`PLAN.md`](PLAN.md) §6, §12.
 ```bash
 pip install -e ".[dev]"
 ruff check src tests
-pytest                       # 113 tests; add ".[oracle]" + HLAHARM_IMGT_DIR for the oracle gate
+pytest                       # 113 tests; add ".[oracle]" + HLACONCORD_IMGT_DIR for the oracle gate
 ```

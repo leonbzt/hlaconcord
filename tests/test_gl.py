@@ -1,6 +1,6 @@
-from hlaharm import gl
-from hlaharm.concordance import concordance
-from hlaharm.model import AlleleCall, GenotypeCall
+from hlaconcord import gl
+from hlaconcord.concordance import concordance
+from hlaconcord.model import AlleleCall, GenotypeCall
 
 
 def ac(reduced):
@@ -66,7 +66,7 @@ def test_no_consensus_locus_yields_empty_string():
         gc("optitype", "A", ["A*01:01"]),
         gc("arcasHLA", "A", ["A*02:01"]),
     ]
-    from hlaharm.concordance import ConsensusRule
+    from hlaconcord.concordance import ConsensusRule
 
     results = concordance(calls, rule=ConsensusRule.UNANIMOUS)
     assert gl.consensus_gl_string(results) == ""

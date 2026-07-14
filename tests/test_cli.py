@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from hlaharm import db
-from hlaharm.cli import main
+from hlaconcord import db
+from hlaconcord.cli import main
 
 FIXTURES = Path(__file__).parent / "fixtures"
 FIXTURE_DB = FIXTURES / "db_3550"

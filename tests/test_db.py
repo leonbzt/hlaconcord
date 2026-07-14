@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from hlaharm import db
-from hlaharm.nomenclature import ReferenceData
+from hlaconcord import db
+from hlaconcord.nomenclature import ReferenceData
 
 FIXTURE_DB = Path(__file__).parent / "fixtures" / "db_3550"
 _RELEASE_FILES = (

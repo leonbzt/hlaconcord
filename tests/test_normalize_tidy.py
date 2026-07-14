@@ -1,10 +1,10 @@
 from pathlib import Path
 
-from hlaharm import parsers
-from hlaharm.model import AlleleCall
-from hlaharm.nomenclature import ReductionBasis, ValidationStatus
-from hlaharm.normalize import normalize, normalize_allele
-from hlaharm.tidy import COLUMNS, tidy_rows
+from hlaconcord import parsers
+from hlaconcord.model import AlleleCall
+from hlaconcord.nomenclature import ReductionBasis, ValidationStatus
+from hlaconcord.normalize import normalize, normalize_allele
+from hlaconcord.tidy import COLUMNS, tidy_rows
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

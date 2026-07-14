@@ -4,11 +4,11 @@ Thin orchestration over the importable pipeline: resolve a reference release,
 build the in-house nomenclature backend, run parse -> normalize -> concord, and
 write the tidy table / concordance report / JSON / GL strings.
 
-    hlaharm run --inputs optitype:S1.tsv arcashla:S1.json --db 3.55.0 -o out/
-    hlaharm run --samplesheet samples.csv -o out/
-    hlaharm validate  HLA-A*02:01 A*99:99
-    hlaharm normalize A*0201
-    hlaharm db list | update <ver> | pin <ver> | path
+    hlacc run --inputs optitype:S1.tsv arcashla:S1.json --db 3.55.0 -o out/
+    hlacc run --samplesheet samples.csv -o out/
+    hlacc validate  HLA-A*02:01 A*99:99
+    hlacc normalize A*0201
+    hlacc db list | update <ver> | pin <ver> | path
 """
 
 from __future__ import annotations
@@ -48,7 +48,7 @@ def _build_nomenclature(root: Path, requested: str | None) -> tuple[InHouseNomen
 
 
 def _fail(message: str, code: int = 2) -> int:
-    print(f"hlaharm: {message}", file=sys.stderr)
+    print(f"hlaconcord: {message}", file=sys.stderr)
     return code
 
 
@@ -101,7 +101,7 @@ def _write_outputs(result: PipelineResult, out_dir: Path, *, want_gl: bool) -> l
     out_dir.mkdir(parents=True, exist_ok=True)
     gl_strings = gl.gl_strings_by_sample(result.concordance)
     meta = {
-        "hlaharm_version": __version__,
+        "hlaconcord_version": __version__,
         "db_version": result.db_version,
         "basis": result.basis.value,
         "consensus_rule": result.rule.value,
@@ -139,7 +139,7 @@ def _write_outputs(result: PipelineResult, out_dir: Path, *, want_gl: bool) -> l
 
 def _print_summary(result: PipelineResult, *, want_gl: bool, stream: TextIO) -> None:
     print(
-        f"# hlaharm {__version__}  db={result.db_version}  basis={result.basis.value}  "
+        f"# hlaconcord {__version__}  db={result.db_version}  basis={result.basis.value}  "
         f"consensus={result.rule.value}  tools={','.join(result.tools)}",
         file=stream,
     )
@@ -256,7 +256,7 @@ def _cmd_db_list(args: argparse.Namespace) -> int:
     pinned = db.pinned_version(root)
     print(f"# data dir: {root}")
     if not releases:
-        print("(no releases installed — run `hlaharm db update <version>`)")
+        print("(no releases installed — run `hlacc db update <version>`)")
         return 0
     for version in releases:
         mark = "*" if pinned and db.version_of(pinned) == version else " "
@@ -307,10 +307,10 @@ def _add_db_option(parser: argparse.ArgumentParser) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="hlaharm",
+        prog="hlacc",
         description="Harmonize and validate HLA typing output across multiple typers.",
     )
-    parser.add_argument("--version", action="version", version=f"hlaharm {__version__}")
+    parser.add_argument("--version", action="version", version=f"hlaconcord {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
 
     # run

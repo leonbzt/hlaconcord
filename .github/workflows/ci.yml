@@ -40,10 +40,10 @@ jobs:
       - name: Install (with oracle extra)
         run: pip install -e ".[dev,oracle]"
       - name: Fetch IPD-IMGT/HLA 3.55.0 (name/group files only)
-        run: python -m hlaharm.cli db update 3.55.0 --data-dir "$PWD/imgt"
+        run: python -m hlaconcord.cli db update 3.55.0 --data-dir "$PWD/imgt"
       - name: Run the oracle gate
         env:
-          HLAHARM_IMGT_DIR: ${{ github.workspace }}/imgt/3.55.0
-          HLAHARM_IMGT_VERSION: "3550"
-          HLAHARM_ORACLE_SAMPLE: "3000"
+          HLACONCORD_IMGT_DIR: ${{ github.workspace }}/imgt/3.55.0
+          HLACONCORD_IMGT_VERSION: "3550"
+          HLACONCORD_ORACLE_SAMPLE: "3000"
         run: pytest tests/test_oracle.py -s
