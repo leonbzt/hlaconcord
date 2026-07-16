@@ -1,0 +1,32 @@
+# This CITATION.cff makes the repository citable and lights up GitHub's
+# "Cite this repository" button. Validate with `cffconvert --validate`.
+# Add your ORCID (uncomment the line) once you have one — reviewers and
+# indexers use it to disambiguate authorship.
+cff-version: 1.2.0
+message: "If you use hlaconcord in your research, please cite it as below, and also cite the IPD-IMGT/HLA database."
+title: "hlaconcord: harmonize and validate HLA typing output across multiple typers"
+abstract: >-
+  hlaconcord parses the native output of multiple NGS-based HLA typers,
+  normalizes every call to canonical IPD-IMGT/HLA nomenclature, validates it
+  against a pinned database release, and reconciles database-version skew by
+  matching renamed alleles on their stable accession id — so a version
+  difference never masquerades as a real disagreement. It reports a per-locus
+  concordance/consensus view (and a GL String) for cross-checking typers.
+type: software
+authors:
+  - given-names: Leon
+    family-names: Botzenhardt
+    orcid: "https://orcid.org/0009-0002-8584-583X"
+version: "0.1.0"
+date-released: "2026-07-15"
+license: MIT
+repository-code: "https://github.com/leonbzt/hlaconcord"
+url: "https://github.com/leonbzt/hlaconcord"
+keywords:
+  - HLA
+  - immunogenomics
+  - IPD-IMGT/HLA
+  - HLA typing
+  - nomenclature
+  - concordance
+  - bioinformatics
